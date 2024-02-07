@@ -21,6 +21,7 @@ public class User {
     private String document;
     private String email;
     private String password;
+    private float value;
 
     public User(UserCreateInputDTO data){
         this.id = null;
@@ -28,5 +29,10 @@ public class User {
         this.document = data.document();
         this.email = data.email();
         this.password = data.password();
+        this.value = 0;
+    }
+
+    public void actualizeValue(float data){
+        this.value = this.value + data;
     }
 }
