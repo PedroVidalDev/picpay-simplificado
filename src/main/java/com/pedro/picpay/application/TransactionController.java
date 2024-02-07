@@ -24,8 +24,8 @@ public class TransactionController {
     @Transactional
     public ResponseEntity createTransaction(@RequestBody @Valid TransactionInputDTO data){
 
-        service.verifyTransaction(data);
+        var transaction = service.verifyTransaction(data);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(transaction);
     }
 }
