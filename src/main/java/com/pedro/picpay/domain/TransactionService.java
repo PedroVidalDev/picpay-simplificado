@@ -19,7 +19,7 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-    public TransactionOutputDTO verifyTransaction(TransactionInputDTO data){
+    public Transaction verifyTransaction(TransactionInputDTO data){
         var payer = userRepository.getReferenceById(data.payer());
         var payee = userRepository.getReferenceById(data.payee());
 
@@ -37,7 +37,9 @@ public class TransactionService {
 
             Transaction transaction = new Transaction(null, payer, payee, data.value());
 
-            return new TransactionOutputDTO(transaction);
+            transactionRepository.save(transaction);
+
+            return transaction;
         }
     }
 }
