@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.lang.reflect.ReflectPermission;
 
 @RestController
-@RequestMapping("/transations")
+@RequestMapping("/transactions")
 public class TransactionController {
 
     @Autowired
