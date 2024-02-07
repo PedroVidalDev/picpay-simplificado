@@ -24,7 +24,13 @@ public class TransactionService {
 
         if(payer.getValue() < data.value()){
             throw new RuntimeException("pagador nao tem dinheiro suficiente");
-        } else{
+        }
+
+        else if(data.value() < 0){
+            throw new RuntimeException("valor da transacao menor que 0");
+        }
+
+        else{
             payee.actualizeValue(data.value());
             payer.actualizeValue(data.value() * -1);
 
