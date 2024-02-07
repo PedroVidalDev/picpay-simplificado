@@ -1,6 +1,6 @@
 package com.pedro.picpay.infrastructure.entities;
 
-import com.pedro.picpay.application.dtos.UserCreateInputDTO;
+import com.pedro.picpay.application.dtos.user.UserCreateInputDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

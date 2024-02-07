@@ -1,4 +1,4 @@
-package com.pedro.picpay.application.dtos;
+package com.pedro.picpay.application.dtos.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

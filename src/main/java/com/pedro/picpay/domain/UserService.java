@@ -1,6 +1,6 @@
 package com.pedro.picpay.domain;
 
-import com.pedro.picpay.application.dtos.UserCreateInputDTO;
+import com.pedro.picpay.application.dtos.user.UserCreateInputDTO;
 import com.pedro.picpay.infrastructure.entities.User;
 import com.pedro.picpay.infrastructure.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
