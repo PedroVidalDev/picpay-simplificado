@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 public record UserCreateInputDTO(
         @NotBlank String name,
-        @NotBlank @CPF @CNPJ String document,
+        @NotBlank @CPF String document,
         @NotBlank @Email String email,
         @NotBlank String password){
 }
