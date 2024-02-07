@@ -4,6 +4,7 @@ import com.pedro.picpay.application.dtos.transaction.TransactionInputDTO;
 import com.pedro.picpay.application.dtos.transaction.TransactionOutputDTO;
 import com.pedro.picpay.infrastructure.entities.Transaction;
 import com.pedro.picpay.infrastructure.entities.User;
+import com.pedro.picpay.infrastructure.exceptions.TransactionValidation;
 import com.pedro.picpay.infrastructure.repositories.TransactionRepository;
 import com.pedro.picpay.infrastructure.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,11 @@ public class TransactionService {
         var payee = userRepository.getReferenceById(data.payee());
 
         if(payer.getValue() < data.value()){
-            throw new RuntimeException("pagador nao tem dinheiro suficiente");
+            throw new TransactionValidation("Payer doesnt have the enough money.");
         }
 
         else if(data.value() < 0){
-            throw new RuntimeException("valor da transacao menor que 0");
+            throw new TransactionValidation("Transaction value lower than zero.");
         }
 
         else{
