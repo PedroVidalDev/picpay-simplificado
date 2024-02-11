@@ -14,6 +14,10 @@ public class UserService {
     private UserRepository repository;
 
     public User verifyUserCreation(UserCreateInputDTO data) {
+        if(isCpf(data.document())){
+            isCpfValid(data.document().toCharArray());
+        };
+
         if(repository.existsByDocument(data.document())){
             throw new UserValidation("Already exists a user with that document.");
         }
@@ -26,5 +30,49 @@ public class UserService {
         repository.save(user);
 
         return user;
+    }
+
+    public boolean isCpf(String cpf){
+        char[] list = cpf.toCharArray();
+
+
+        if(list.length != 11){
+            return false;
+        }
+
+        return true;
+
+
+    }
+
+    public void isCpfValid(char[] list){
+
+        int firstResult = 0;
+        int secondResult = 0;
+
+        int firstCounter = 10;
+        int secondCounter = 11;
+
+        for(char number : list) {
+            if(firstCounter < 2){
+                break;
+            }
+
+            firstResult = firstResult + (Integer.parseInt(String.valueOf(number)) * firstCounter);
+            firstCounter--;
+        }
+
+        for(char number : list) {
+            if(secondCounter < 2){
+                break;
+            }
+
+            secondResult = secondResult + (Integer.parseInt(String.valueOf(number)) * secondCounter);
+            secondCounter--;
+        }
+
+        if((firstResult * 10) % 11 != Integer.parseInt(String.valueOf(list[9])) || (secondResult * 10) % 11 != Integer.parseInt(String.valueOf(list[10]))){
+            throw new UserValidation("Invalid CPF.");
+        }
     }
 }
