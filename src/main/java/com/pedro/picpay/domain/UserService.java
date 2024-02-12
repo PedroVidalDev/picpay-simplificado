@@ -67,28 +67,32 @@ public class UserService {
         int firstResult = 0;
         int secondResult = 0;
 
-        int firstCounter = 10;
-        int secondCounter = 11;
+        int counter = 10;
 
         for(char number : list) {
-            if(firstCounter < 2){
+            if(counter < 2){
                 break;
             }
 
-            firstResult = firstResult + (Integer.parseInt(String.valueOf(number)) * firstCounter);
-            firstCounter--;
+            firstResult = firstResult + (Integer.parseInt(String.valueOf(number)) * counter);
+            counter--;
         }
 
+        counter = 11;
+
         for(char number : list) {
-            if(secondCounter < 2){
+            if(counter < 2){
                 break;
             }
 
-            secondResult = secondResult + (Integer.parseInt(String.valueOf(number)) * secondCounter);
-            secondCounter--;
+            secondResult = secondResult + (Integer.parseInt(String.valueOf(number)) * counter);
+            counter--;
         }
 
-        if((firstResult * 10) % 11 != Integer.parseInt(String.valueOf(list[9])) || (secondResult * 10) % 11 != Integer.parseInt(String.valueOf(list[10]))){
+        int firstDigit = (firstResult * 10) % 11 == 10 ? 0 : (firstResult * 10) % 11;
+        int secondDigit = (secondResult * 10) % 11 == 10 ? 0 : (secondResult * 10) % 11;
+
+        if(firstDigit != Integer.parseInt(String.valueOf(list[9])) || secondDigit != Integer.parseInt(String.valueOf(list[10]))){
             throw new UserValidation("Invalid CPF.");
         }
     }
