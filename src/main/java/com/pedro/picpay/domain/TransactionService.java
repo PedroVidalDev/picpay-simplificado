@@ -19,27 +19,33 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
+
+    @Autowired
+    private UserService userService;
     public Transaction verifyTransaction(TransactionInputDTO data){
         var payer = userRepository.getReferenceById(data.payer());
         var payee = userRepository.getReferenceById(data.payee());
+
+        if(userService.isCnpj(userService.formatData(payer.getDocument()))){
+            throw new TransactionValidation("That payer is not a normal user and cant send cash to anyone.");
+        }
 
         if(payer.getValue() < data.value()){
             throw new TransactionValidation("Payer doesnt have the enough money.");
         }
 
-        else if(data.value() < 0){
+        if(data.value() < 0){
             throw new TransactionValidation("Transaction value lower than zero.");
         }
 
-        else{
-            payee.actualizeValue(data.value());
-            payer.actualizeValue(data.value() * -1);
+        payee.actualizeValue(data.value());
+        payer.actualizeValue(data.value() * -1);
 
-            Transaction transaction = new Transaction(null, payer, payee, data.value());
+        Transaction transaction = new Transaction(null, payer, payee, data.value());
 
-            transactionRepository.save(transaction);
+        transactionRepository.save(transaction);
 
-            return transaction;
-        }
+        return transaction;
+
     }
 }
