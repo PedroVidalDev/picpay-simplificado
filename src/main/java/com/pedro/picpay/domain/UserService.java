@@ -14,11 +14,13 @@ public class UserService {
     private UserRepository repository;
 
     public User verifyUserCreation(UserCreateInputDTO data) {
-        if(isCpf(data.document())){
+        String document = formatData(data.document());
+
+        if(isCpf(document)){
             isCpfValid(data.document().toCharArray());
         };
 
-        if(repository.existsByDocument(data.document())){
+        if(repository.existsByDocument(document)){
             throw new UserValidation("Already exists a user with that document.");
         }
 
@@ -32,16 +34,22 @@ public class UserService {
         return user;
     }
 
-    public boolean isCpf(String cpf){
-        char[] list = cpf.toCharArray();
+    public String formatData(String data){
+        data = data.replaceAll("\\.", "");
+        data = data.replaceAll("-", "");
 
+        return data;
+    }
+
+    public boolean isCpf(String cpf){
+
+        char[] list = cpf.toCharArray();
 
         if(list.length != 11){
             return false;
         }
 
         return true;
-
 
     }
 
