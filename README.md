@@ -12,26 +12,16 @@ O objetivo do repositório é treinar o framework Spring, resolvendo um desafio 
 Basta baixar o projeto e rodar o seguinte comando: `java -Dspring.profiles.active=prod -jar target/picpay-0.0.1-SNAPSHOT.jar`
 
 ## Rotas
-POST - `/users` - criar uma nova task no banco.
+![image](https://github.com/PedroVidalDev/picpay-simplificado/assets/113215138/6a077dc3-27bf-4ab8-b5f2-3533553d15c6)
+Link do swagger: `http://localhost:8080/swagger-ui/index.html#/`
 
-`{
-"name": "Testname",
-"email": "Test Email",
-"document": "Teste document",
-"password": "1234"
-}`
+POST - `/users` - criar uma nova task no banco.
 
 GET - `/users/{id}` - resgatar algum usuário do banco.
 
 DELETE - `/users/{id}` - deleta algum usuário do banco.
 
 POST - `/transactions` - criar uma nova transação no banco.
-
-`{
-"payer": 1,
-"payee": 2,
-"value": 24
-}`
 
 GET - `/transactions/{id}` - resgatar alguma transação do banco.
 
