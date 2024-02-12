@@ -24,7 +24,7 @@ public class UserService {
             isCnpjValid(document.toCharArray());
         }
 
-        else{
+        if(!isCpf(document) && !isCnpj(document)){
             throw new UserValidation("Document is not valid.");
         }
 
