@@ -17,8 +17,16 @@ public class UserService {
         String document = formatData(data.document());
 
         if(isCpf(document)){
-            isCpfValid(data.document().toCharArray());
+            isCpfValid(document.toCharArray());
         };
+
+        if(isCnpj(document)){
+            isCnpjValid(document.toCharArray());
+        }
+
+        else{
+            throw new UserValidation("Document is not valid.");
+        }
 
         if(repository.existsByDocument(document)){
             throw new UserValidation("Already exists a user with that document.");
@@ -37,6 +45,7 @@ public class UserService {
     public String formatData(String data){
         data = data.replaceAll("\\.", "");
         data = data.replaceAll("-", "");
+        data = data.replaceAll("/", "");
 
         return data;
     }
@@ -83,4 +92,65 @@ public class UserService {
             throw new UserValidation("Invalid CPF.");
         }
     }
+
+    public boolean isCnpj(String cnpj){
+        char[] list = cnpj.toCharArray();
+
+        if(list.length != 14){
+            return false;
+        }
+
+        return true;
+    }
+
+    private void isCnpjValid(char[] list) {
+        int firstResult = 0;
+        int secondResult = 0;
+
+        int firstCounter = 5;
+        int secondCounter = 9;
+
+        for(char number : list) {
+            if(firstCounter < 2){
+                if(secondCounter < 2){
+                    break;
+                }
+
+                firstResult = firstResult + (Integer.parseInt(String.valueOf(number)) * secondCounter);
+                secondCounter--;
+            }
+
+            else{
+                firstResult = firstResult + (Integer.parseInt(String.valueOf(number)) * firstCounter);
+                firstCounter--;
+            }
+        }
+
+        firstCounter = 6;
+        secondCounter = 9;
+
+        for(char number : list) {
+            if(firstCounter < 2){
+                if(secondCounter < 2){
+                    break;
+                }
+
+                secondResult = secondResult + (Integer.parseInt(String.valueOf(number)) * secondCounter);
+                secondCounter--;
+            }
+
+            else{
+                secondResult = secondResult + (Integer.parseInt(String.valueOf(number)) * firstCounter);
+                firstCounter--;
+            }
+        }
+
+        int firstDigit = firstResult % 11 < 2 ? 0 : 11 - firstResult % 11;
+        int secondDigit = secondResult % 11 < 2 ? 0 : 11 - secondResult % 11;
+
+        if(firstDigit != Integer.parseInt(String.valueOf(list[12])) || secondDigit != Integer.parseInt(String.valueOf(list[13]))){
+            throw new UserValidation("Invalid CNPJ.");
+        }
+    }
+
 }
